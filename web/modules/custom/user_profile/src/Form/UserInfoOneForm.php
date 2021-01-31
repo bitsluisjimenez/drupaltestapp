@@ -28,6 +28,7 @@ class UserInfoOneForm extends MultistepFormBase {
       '#description' => $this->t('User first name'),
       '#maxlength' => 64,
       '#size' => 64,
+      '#required' => TRUE,
       '#weight' => '0',
     ];
     $form['last_name'] = [
@@ -36,6 +37,7 @@ class UserInfoOneForm extends MultistepFormBase {
       '#description' => $this->t('User last name'),
       '#maxlength' => 64,
       '#size' => 64,
+      '#required' => TRUE,
       '#weight' => '0',
     ];
     $form['gender'] = [
@@ -48,12 +50,14 @@ class UserInfoOneForm extends MultistepFormBase {
         2 => $this
           ->t('Female'),
       ),
+      '#required' => TRUE,
       '#weight' => '0',
     ];
     $form['date_of_birth'] = [
       '#type' => 'date',
       '#title' => $this->t('Date of birth'),
       '#description' => $this->t('User date of birth'),
+      '#required' => TRUE,
       '#weight' => '0',
     ];
 
@@ -76,11 +80,13 @@ class UserInfoOneForm extends MultistepFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Display result.
+    // Set all user info in private store.
     $this->store->set('first_name', $form_state->getValue('first_name'));
     $this->store->set('last_name', $form_state->getValue('last_name'));
     $this->store->set('gender', $form_state->getValue('gender'));
     $this->store->set('date_of_birth', $form_state->getValue('date_of_birth'));
+
+    // Redirect to second step.
     $form_state->setRedirect('user_profile.user_info_two_form');
   }
 

@@ -78,6 +78,7 @@ class UserInfoTwoForm extends MultistepFormBase {
       '#description' => $this->t('User city'),
       '#options' => $cities,
       '#size' => 10,
+      '#required' => TRUE,
       '#weight' => '0',
     ];
     $form['phone_number'] = [
@@ -121,12 +122,12 @@ class UserInfoTwoForm extends MultistepFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Display result.
+    // Set extra user info in private store.
     $this->store->set('city', $form_state->getValue('city'));
     $this->store->set('phone_number', $form_state->getValue('phone_number'));
     $this->store->set('address', $form_state->getValue('address'));
 
-    // Save the data
+    // Save user info in DB.
     parent::saveData();
     $form_state->setRedirect('user_profile.user_info_one_form');
   }
