@@ -22,10 +22,12 @@ class UserInfoOneForm extends MultistepFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
+
     $form['first_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('First name'),
       '#description' => $this->t('User first name'),
+      '#default_value' => $this->store->get('first_name') ?? '',
       '#maxlength' => 64,
       '#size' => 64,
       '#required' => TRUE,
@@ -35,6 +37,7 @@ class UserInfoOneForm extends MultistepFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Last name'),
       '#description' => $this->t('User last name'),
+      '#default_value' => $this->store->get('last_name') ?? '',
       '#maxlength' => 64,
       '#size' => 64,
       '#required' => TRUE,
@@ -43,7 +46,7 @@ class UserInfoOneForm extends MultistepFormBase {
     $form['gender'] = [
       '#type' => 'radios',
       '#title' => $this->t('Gender'),
-      '#default_value' => 1,
+      '#default_value' => $this->store->get('gender') ?? 1,
       '#options' => array(
         1 => $this
           ->t('Male'),
@@ -57,6 +60,7 @@ class UserInfoOneForm extends MultistepFormBase {
       '#type' => 'date',
       '#title' => $this->t('Date of birth'),
       '#description' => $this->t('User date of birth'),
+      '#default_value' => $this->store->get('date_of_birth') ?? '',
       '#required' => TRUE,
       '#weight' => '0',
     ];
