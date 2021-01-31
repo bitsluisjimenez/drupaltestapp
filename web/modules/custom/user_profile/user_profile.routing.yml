@@ -12,3 +12,10 @@ user_profile.user_info_one_form:
     _title: 'User Info'
   requirements:
     _access: 'TRUE'
+user_profile.user_info_two_form:
+  path: '/user_profile/Form/UserInfoTwoForm'
+  defaults:
+    _form: '\Drupal\user_profile\Form\UserInfoTwoForm'
+    _title: 'User Info 2'
+  requirements:
+    _access: 'TRUE'
