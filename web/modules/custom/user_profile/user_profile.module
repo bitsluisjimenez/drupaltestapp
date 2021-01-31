@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains user_profile.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function user_profile_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the user_profile module.
+    case 'help.page.user_profile':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('multi-step form in Drupal 8 where users add the uinfo profile') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function user_profile_theme() {
+  return [
+    'user_profile' => [
+      'render element' => 'children',
+    ],
+  ];
+}
