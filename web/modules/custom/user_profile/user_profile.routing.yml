@@ -5,3 +5,10 @@ user_profile.multistep_form:
     _title: 'MultistepFormBase'
   requirements:
     _access: 'TRUE'
+user_profile.user_info_one_form:
+  path: '/user_profile/Form/UserInfoOneForm'
+  defaults:
+    _form: '\Drupal\user_profile\Form\UserInfoOneForm'
+    _title: 'User Info'
+  requirements:
+    _access: 'TRUE'
