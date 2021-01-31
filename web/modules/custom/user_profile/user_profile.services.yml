@@ -1,0 +1,7 @@
+services:
+  logger.channel.user_profile:
+    parent: logger.channel_base
+    arguments: ['user_profile']
+  user_profile.storage:
+    class: Drupal\user_profile\UserProfileStorage
+    arguments: []

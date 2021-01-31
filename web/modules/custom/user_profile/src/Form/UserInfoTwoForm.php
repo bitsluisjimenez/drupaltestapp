@@ -56,12 +56,20 @@ class UserInfoTwoForm extends MultistepFormBase {
         ];
       }
       else {
-        $responseObj = json_decode($response); 
-        $responseData = $responseObj->data;
-        foreach ($responseData as $key => $value) {
-          if ($value->type == 'CITY') {
-            $cities[$value->city] = $value->city;
+        $responseObj = json_decode($response);
+        if (isset($responseObj->data)) {
+          $responseData = $responseObj->data;
+          foreach ($responseData as $key => $value) {
+            if ($value->type == 'CITY') {
+              $cities[$value->city] = $value->city;
+            }
           }
+        }
+        else {
+          $cities = [
+            'Popayán' => $this->t('Popayán'),
+            'Bogotá' => $this->t('Bogotá'),
+          ];
         }
       }
     }
@@ -103,8 +111,8 @@ class UserInfoTwoForm extends MultistepFormBase {
       '#type' => 'button',
       '#value' => $this->t('Previous'),
       '#ajax' => [
-        'callback' => '::storeInfoTwoCallback', // don't forget :: when calling a class method.
-        'disable-refocus' => TRUE, // Or TRUE to prevent re-focusing on the triggering element.
+        'callback' => '::storeInfoTwoCallback', // :: when calling a class method.
+        'disable-refocus' => TRUE, // Prevent re-focusing on the triggering element.
         'event' => 'click',
         'progress' => [
           'type' => 'throbber',
@@ -136,11 +144,18 @@ class UserInfoTwoForm extends MultistepFormBase {
     $this->store->set('address', $form_state->getValue('address'));
 
     // Save user info in DB and clean the user store data.
-    parent::saveData();
+    $userProfileStorage = \Drupal::service('user_profile.storage');
+    if ($userProfileStorage->createUserFromProfile($this->store)) {
+      // Notify user and delete data stored.
+      parent::saveData();
+    }
+    
     $form_state->setRedirect('user_profile.user_info_one_form');
   }
 
-  // Add form two values to private store.
+  /**
+   * Add form two values to private store.
+   */
   public function storeInfoTwoCallback(array &$form, FormStateInterface $form_state) {
     // Set extra user info in private store.
     $this->store->set('city', $form_state->getValue('city'));

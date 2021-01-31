@@ -111,7 +111,7 @@ class MultistepFormBase extends FormBase {
    * the multistep form.
    */
   protected function deleteStore() {
-    $keys = ['name', 'email', 'age', 'location'];
+    $keys = ['first_name', 'last_name', 'gender', 'date_of_birth', 'city', 'phone_number', 'address'];
     foreach ($keys as $key) {
       $this->store->delete($key);
     }
