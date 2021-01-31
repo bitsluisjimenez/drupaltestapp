@@ -21,6 +21,7 @@ class UserInfoOneForm extends MultistepFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildForm($form, $form_state);
     $form['first_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('First name'),
