@@ -1,0 +1,20 @@
+uuid: 8f9caeba-9afe-42f8-a0b1-91d08bb7788a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_last_name
+  module:
+    - user
+id: user.user.field_last_name
+field_name: field_last_name
+entity_type: user
+bundle: user
+label: 'Last name'
+description: 'Please enter your last name'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

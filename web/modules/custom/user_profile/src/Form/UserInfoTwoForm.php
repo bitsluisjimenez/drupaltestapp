@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Url;
+use Drupal\user_profile\Ajax\DisplayMessageCommand;
 
 /**
  * Class UserInfoTwoForm.
@@ -121,6 +122,22 @@ class UserInfoTwoForm extends MultistepFormBase {
       ],
     ];
 
+    $form['actions']['submit'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Submit'),
+      '#button_type' => 'primary',
+      '#weight' => 10,
+      '#ajax' => [
+        'callback' => '::storeUserInfoCallback', // :: when calling a class method.
+        'disable-refocus' => TRUE, // Prevent re-focusing on the triggering element.
+        'event' => 'click',
+        'progress' => [
+          'type' => 'throbber',
+          'message' => $this->t('Verifying entry...'),
+        ],
+      ],
+    ];
+
     return $form;
   }
 
@@ -138,6 +155,7 @@ class UserInfoTwoForm extends MultistepFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    /*
     // Set extra user info in private store.
     $this->store->set('city', $form_state->getValue('city'));
     $this->store->set('phone_number', $form_state->getValue('phone_number'));
@@ -149,7 +167,7 @@ class UserInfoTwoForm extends MultistepFormBase {
       // Notify user and delete data stored.
       parent::saveData();
     }
-    
+    */
     $form_state->setRedirect('user_profile.user_info_one_form');
   }
 
@@ -166,6 +184,41 @@ class UserInfoTwoForm extends MultistepFormBase {
     $url = Url::fromRoute('user_profile.user_info_one_form');
     $command = new RedirectCommand($url->toString());
     $response->addCommand($command);
+    return $response;
+  }
+
+  /**
+   * Save all data in DB.
+   */
+  public function storeUserInfoCallback(array &$form, FormStateInterface $form_state) {
+    // Set extra user info in private store.
+    $this->store->set('city', $form_state->getValue('city'));
+    $this->store->set('phone_number', $form_state->getValue('phone_number'));
+    $this->store->set('address', $form_state->getValue('address'));
+
+    // Save user info in DB and clean the user store data.
+    $userProfileStorage = \Drupal::service('user_profile.storage');
+    if ($userProfileStorage->createUserFromProfile($this->store)) {
+      // Notify user and delete data stored.
+      parent::saveData();
+      return $this->notifyUser('User created succesfully');
+    }
+
+    //$form_state->setRedirect('user_profile.user_info_one_form');
+  }
+
+  /**
+   * Notify user via custom Ajax command.
+   */
+  public function notifyUser($mes = '') {
+    $message = new \stdClass();
+    $message->mid = 1;
+    $message->subject = 'este es el subject';
+    $message->content = 'Mensaje enviado correctamente.';
+    $response = new AjaxResponse();
+    $response->addCommand(new DisplayMessageCommand($message));
+    $url = Url::fromRoute('user_profile.user_info_one_form');
+    $response->addCommand(new RedirectCommand($url->toString()));
     return $response;
   }
 

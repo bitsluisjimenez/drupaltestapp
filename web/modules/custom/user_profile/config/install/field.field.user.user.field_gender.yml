@@ -1,0 +1,34 @@
+uuid: 0399b2a9-1971-4aa8-b9e8-aa1cd508986d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_gender
+    - taxonomy.vocabulary.gender
+  content:
+    - 'taxonomy_term:gender:7715463a-5f73-4946-8ba2-c6ff1dd403ee'
+  module:
+    - user
+id: user.user.field_gender
+field_name: field_gender
+entity_type: user
+bundle: user
+label: Gender
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    target_uuid: 7715463a-5f73-4946-8ba2-c6ff1dd403ee
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      gender: gender
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

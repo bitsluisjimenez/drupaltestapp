@@ -1,0 +1,19 @@
+user_profile:
+  version: VERSION
+  js:
+    js/form_behavior.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal.ajax
+    - core/drupalSettings
+
+materialize:
+  version: VERSION
+  css:
+    css/materialize/materialize.min.css: {}
+  js:
+    js/materialize/materialize.min.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once

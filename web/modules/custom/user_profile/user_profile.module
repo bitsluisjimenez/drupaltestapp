@@ -33,3 +33,16 @@ function user_profile_theme() {
     ],
   ];
 }
+
+function user_profile_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ('user_info_one_form' == $form_id || 'user_info_two_form' == $form_id) {
+    $form['#attached']['library'][] = 'user_profile/user_profile';
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function user_profile_page_attachments_alter(array &$attachments) {
+  //$attachments['#attached']['library'][] = 'user_profile/materialize';
+}
