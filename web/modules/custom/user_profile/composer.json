@@ -1,0 +1,13 @@
+{
+    "name": "user_profile",
+    "type": "drupal-module",
+    "description": "multi-step form in Drupal 8 where users add the uinfo profile",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/user_profile",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/user_profile",
+        "source": "http://cgit.drupalcode.org/user_profile",
+    },
+}

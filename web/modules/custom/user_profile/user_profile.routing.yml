@@ -1,0 +1,21 @@
+user_profile.multistep_form:
+  path: '/user_profile/Form/Multistep'
+  defaults:
+    _form: '\Drupal\user_profile\Form\MultistepFormBase'
+    _title: 'MultistepFormBase'
+  requirements:
+    _access: 'TRUE'
+user_profile.user_info_one_form:
+  path: '/user_profile/Form/UserInfoOneForm'
+  defaults:
+    _form: '\Drupal\user_profile\Form\UserInfoOneForm'
+    _title: 'User Info'
+  requirements:
+    _access: 'TRUE'
+user_profile.user_info_two_form:
+  path: '/user_profile/Form/UserInfoTwoForm'
+  defaults:
+    _form: '\Drupal\user_profile\Form\UserInfoTwoForm'
+    _title: 'User Info 2'
+  requirements:
+    _access: 'TRUE'
